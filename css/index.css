@@ -1,0 +1,61 @@
+@font-face {
+    font-family: 'RobotoMono';
+    src: url('/fonts/RobotoMono-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.heading {
+    position: relative;
+    padding: 100px 100px 30px;
+}
+
+.heading-text {
+    font-family: 'RobotoMono';
+    font-size: 3rem;
+    font-weight: 700;
+    color: #000;
+}
+
+.info {
+    position: relative;
+    padding: 50px 100px 100px;
+    background-color: var(--wave-color);
+}
+
+.info-text {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: #fff;
+}
+
+.gradient-to-darker {
+    background: linear-gradient(var(--wave-color), var(--wave-color-darker));
+    height: 40vh;
+    text-align: center;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    font-size: 3rem;
+    font-weight: 700;
+}
+
+.content {
+    position: relative;
+    padding: 50px 20px 200px;
+    background-color: var(--wave-color-darker);
+}
+
+.content-text {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: #fff;
+}

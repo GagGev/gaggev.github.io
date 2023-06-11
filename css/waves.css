@@ -1,0 +1,76 @@
+/* the color used: #0099ff */
+:root {
+    --wave-color: #0099ff;
+    --wave-color-darker: #0066cc;
+    --wave-total-length: 10000px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.wave-container {
+    position: relative;
+    height: 200px;
+    width: 100%;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.wave {
+    position: absolute;
+    bottom: 0;
+    width: var(--wave-total-length);
+}
+
+.wave1 {
+    animation: wave-left-right 40s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
+    z-index: 504;
+    height: 85%;
+}
+
+.wave2 {
+    animation: wave-right-left 35s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
+    z-index: 503;
+    height: 90%;
+}
+
+.wave3 {
+    animation: wave-left-right 30s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
+    z-index: 502;
+    height: 95%;
+}
+
+.wave4 {
+    animation: wave-right-left 20s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
+    z-index: 501;
+    height: 100%;
+}
+
+@keyframes wave-left-right {
+    0% {
+        left: 0;
+    }
+    50% {
+        left: calc(100% - var(--wave-total-length));
+    }
+    100% {
+        left: 0;
+    }
+}
+
+@keyframes wave-right-left {
+    0% {
+        left: calc(100% - var(--wave-total-length));
+    }
+    50% {
+        left: 0;
+    }
+    100% {
+        left: calc(100% - var(--wave-total-length));
+    }
+}

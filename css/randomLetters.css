@@ -1,0 +1,18 @@
+@font-face {
+    font-family: 'RobotoMono';
+    src: url('/fonts/RobotoMono-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.heading-text {
+    font-family: 'RobotoMono';
+    font-size: 3rem;
+    font-weight: 700;
+    color: #000;
+}
