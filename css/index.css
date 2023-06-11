@@ -26,7 +26,7 @@
 
 .info {
     position: relative;
-    padding: 50px 100px 100px;
+    padding: 50px 100px 50px;
     background-color: var(--wave-color);
 }
 
@@ -58,6 +58,11 @@
     font-size: 1.5rem;
     font-weight: 400;
     color: #fff;
+}
+
+.over-bubbles {
+    position: relative;
+    z-index: 602;
 }
 
 @media (max-width: 700px) {

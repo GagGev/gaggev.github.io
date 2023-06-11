@@ -22,8 +22,7 @@ function headingRandLetters() {
     }, 30);
 }
 
-function onLoad() {
-    headingRandLetters();
-}
+// this line of code is to run the function every 10 seconds
+headingRandLetters();
+var randLettersInterval = setInterval(headingRandLetters, 10000);
 
-onLoad();
