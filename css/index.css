@@ -59,3 +59,29 @@
     font-weight: 400;
     color: #fff;
 }
+
+@media (min-width: 700px) {
+    .heading {
+        padding: 50px 50px 15px;
+    }
+
+    .heading-text {
+        font-size: 2rem;
+    }
+
+    .info {
+        padding: 25px 50px 50px;
+    }
+
+    .info-text {
+        font-size: 1rem;
+    }
+
+    .content {
+        padding: 25px 10px 100px;
+    }
+
+    .content-text {
+        font-size: 1rem;
+    }
+}
