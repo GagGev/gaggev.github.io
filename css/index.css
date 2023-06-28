@@ -26,7 +26,7 @@
 
 .info {
     position: relative;
-    padding: 50px 100px 50px;
+    padding: 50px 100px 0;
     background-color: var(--wave-color);
 }
 
@@ -48,10 +48,21 @@
     font-weight: 700;
 }
 
+.subheading-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    margin-top: 100px;
+}
+
 .content {
     position: relative;
     padding: 50px 20px 200px;
-    background-color: var(--wave-color-darker);
+    /* webkit for chrome */
+    background: -webkit-linear-gradient(var(--wave-color), var(--wave-color-darker) 30%, var(--wave-color-darkest));
+    background: linear-gradient(var(--wave-color), var(--wave-color-darker) 30%, var(--wave-color-darkest));
 }
 
 .content-text {

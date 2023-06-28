@@ -1,7 +1,9 @@
 /* the color used: #0099ff */
+
 :root {
     --wave-color: #0099ff;
     --wave-color-darker: #0066cc;
+    --wave-color-darkest: #003366;
     --wave-total-length: 10000px;
 }
 
