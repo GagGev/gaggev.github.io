@@ -22,7 +22,7 @@ function headingRandLetters() {
     }, 30);
 }
 
-// this line of code is to run the function every 10 seconds
+// this line of code is to run the function every 5 seconds
 headingRandLetters();
-var randLettersInterval = setInterval(headingRandLetters, 10000);
+var randLettersInterval = setInterval(headingRandLetters, 5000);
 
