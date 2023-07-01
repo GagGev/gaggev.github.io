@@ -149,4 +149,8 @@
     .footer {
         align-items: center;
     }
+
+    .footer .disclaimer {
+        display: none;
+    }
 }
