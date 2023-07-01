@@ -1,3 +1,7 @@
+:root {
+    --footer-height: 250px;
+}
+
 @font-face {
     font-family: 'RobotoMono';
     src: url('/fonts/RobotoMono-Regular.ttf') format('truetype');
@@ -59,7 +63,7 @@
 
 .content {
     position: relative;
-    padding: 50px 20px 200px;
+    padding: 50px 20px var(--footer-height);
     /* webkit for chrome */
     background: -webkit-linear-gradient(var(--wave-color), var(--wave-color-darker) 30%, var(--wave-color-darkest));
     background: linear-gradient(var(--wave-color), var(--wave-color-darker) 30%, var(--wave-color-darkest));
@@ -81,7 +85,7 @@
     z-index: 601;
     bottom: 0;
     width: 100%;
-    height: 250px;
+    height: var(--footer-height);
     background-image: url("../images/bottom_of_sea_2.png");
     /* set the background to cover all of the div  by strethcing across it */
     background-size: cover;
@@ -126,10 +130,14 @@
     }
 
     .content {
-        padding: 25px 10px 100px;
+        padding: 25px 10px var(--footer-height);
     }
 
     .content-text {
         font-size: 1rem;
+    }
+
+    .footer {
+        justify-content: center;
     }
 }
