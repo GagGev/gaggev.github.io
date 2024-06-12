@@ -34,4 +34,4 @@ function RandomInterval(func, minDelay, maxDelay) {
 }
 
 // using the above functions
-var stopBubbles = RandomInterval(GenerateRandomBubble, 1000, 2000);
+var stopBubbles = RandomInterval(GenerateRandomBubble, 2000, 4000);
