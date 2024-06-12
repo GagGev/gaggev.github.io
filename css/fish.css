@@ -1,0 +1,21 @@
+.fish {
+    position: absolute;
+}
+
+@keyframes fishHorizontal {
+    0% {
+        left: -500px;
+    }
+    100% {
+        left: calc(100% + 500px);
+    }
+}
+
+@keyframes fishVertical {
+    0% { 
+        margin-top:0px;
+    }
+    100% { 
+        margin-top:50px;
+    }
+}
