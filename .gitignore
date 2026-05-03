@@ -1,0 +1,94 @@
+# =============================================================
+# .gitignore — personal site hosted on GitHub Pages.
+#
+# Everything needed to serve the site must stay TRACKED:
+#   index.html, favicon.svg, robots.txt, .nojekyll, LICENSE.md,
+#   Gagik_Gevorgyan_CV*.pdf/.docx, css/, js/, fonts/, images/,
+#   assets/, testing/.
+#
+# This file is intentionally narrow; when in doubt, leave a
+# file tracked. Explicit ! re-includes at the bottom guard the
+# few dotfiles that must NOT be ignored.
+# =============================================================
+
+# ---- OS-specific junk ---------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ---- Editor / IDE -------------------------------------------
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+*.swp
+*.swo
+*.swn
+*~
+.history/
+.project
+.settings/
+
+# ---- Cursor local state (kept outside repo normally, but be safe)
+.cursor/
+.cursor-*/
+
+# ---- Temp, backup, patch files ------------------------------
+*.bak
+*.backup
+*.tmp
+*.orig
+*.rej
+*.log
+logs/
+
+# ---- Env / secrets ------------------------------------------
+.env
+.env.*
+!.env.example
+secrets.json
+
+# ---- Node / bundler output (in case tooling is added later) -
+node_modules/
+dist/
+build/
+out/
+.cache/
+.parcel-cache/
+.next/
+.nuxt/
+.vercel/
+.netlify/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ---- Python caches (http.server, scripts) -------------------
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+
+# ---- Local preview / one-off artifacts ----------------------
+cv_text.txt
+cv_extracted.xml
+*.draft.md
+coverage/
+.nyc_output/
+
+# =============================================================
+# Keep-these overrides — files that start with a dot or match a
+# wildcard above but MUST ship to GitHub Pages.
+# =============================================================
+!.nojekyll
+!.gitignore
+!.gitattributes

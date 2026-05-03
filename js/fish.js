@@ -1,60 +1,89 @@
-// a function to generate a random fish and add it to the bubbleContainer
-function GenerateRandomFish() {
-    // getting the bubbleContainer
-    const fishContainer = document.getElementById("bubbleContainer");
-    var fish = document.createElement("div");
+// Fish drift through the underwater layer behind content.
+// Capped at MAX_FISH concurrent, slower + smaller than before,
+// and completely disabled for prefers-reduced-motion users.
 
-    // setting the background image from one of the fish images (fish1 to fish4)
-    var fishType = Math.floor(Math.random() * 3 + 1);
-    fish.style.backgroundImage = "url('images/fish" + fishType + ".png')";
-
-    // setting div to fit the background image
-    fish.style.width = "500px";
-    fish.style.height = "225px";
-    fish.style.backgroundSize = "contain";
-    fish.style.backgroundRepeat = "no-repeat";
-
-    // setting the fish's class, position, size, and animation
-    fish.className = "fish";
-    fish.style.left = "-500px";
-    // change the top and scale parameters depending on the fish type
-    if(fishType == 1) {
-        fish.style.top = Math.random() * 20 + 30 + "%";
-        fish.style.transform = "scale(" + (Math.random() + 1) / 6 + ")";
+(function () {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) {
+        return;
     }
-    else if(fishType == 2) {
-        fish.style.top = Math.random() * 30 + 40 + "%";
-        fish.style.transform = "scale(" + (Math.random() + 1) / 6 + ")";
-    }
-    else if(fishType == 3) {
-        fish.style.top = Math.random() * 30 + 60 + "%";
-        fish.style.transform = "scale(" + (Math.random() + 1) / 2 + ")";
-    }
-    const ascendTime = (Math.random() * 20 + 20);
-    fish.style.animation = "fishHorizontal " + ascendTime + "s ease-in-out, fishVertical " + (Math.random() * 1 + 1) + "s ease-in-out infinite alternate";
 
-    // we want to remove the fish after it's done going right
-    setTimeout(function() {
-        fish.remove();
+    const container = document.getElementById('fishLayer');
+    if (!container) {
+        return;
     }
-    , ascendTime * 1000);
 
-    // finally, add the fish to the container
-    fishContainer.appendChild(fish);
-}
+    const MAX_FISH = 30;
+    const SPAWN_MIN_MS = 1000;
+    const SPAWN_MAX_MS = 4000;
+    let active = 0;
 
-// setInterval, but with a random delay
-function RandomInterval(func, minDelay, maxDelay) {
-    var timeout;
-    var runFunc = function() {
-        timeout = setTimeout(runFunc, Math.random() * (maxDelay - minDelay) + minDelay);
-        func();
+    function generateFish() {
+        if (active >= MAX_FISH) {
+            return;
+        }
+
+        const fish = document.createElement('div');
+        const fishType = Math.floor(Math.random() * 3) + 1;
+        const goingRight = Math.random() < 0.5;
+
+        fish.className = 'fish';
+        fish.style.backgroundImage = "url('images/fish" + fishType + ".png')";
+        fish.style.width = '500px';
+        fish.style.height = '225px';
+        fish.style.backgroundSize = 'contain';
+        fish.style.backgroundRepeat = 'no-repeat';
+
+        // Distribute across (almost) the full container height. Each type
+        // occupies a loose band so small / medium / large fish layer
+        // naturally: small up top, mid in the middle, big near the bottom.
+        let topPct;
+        let scale;
+        if (fishType === 1) {
+            topPct = Math.random() * 30;              // 0 - 30%
+            scale  = (Math.random() + 1) / 8;          // 0.125 - 0.25
+        } else if (fishType === 2) {
+            topPct = Math.random() * 40 + 25;         // 25 - 65%
+            scale  = (Math.random() + 1) / 8;          // 0.125 - 0.25
+        } else {
+            topPct = Math.random() * 35 + 55;         // 55 - 90%
+            scale  = (Math.random() + 1) / 3.5;        // 0.286 - 0.571
+        }
+        fish.style.top = topPct + '%';
+
+        // Flip horizontally when swimming right-to-left so the fish faces
+        // the direction it's travelling.
+        const xScale = goingRight ? scale : -scale;
+        fish.style.transform = 'scale(' + xScale + ', ' + scale + ')';
+        fish.style.left = goingRight ? '-500px' : 'calc(100% + 500px)';
+
+        const ascendTime = Math.random() * 20 + 40;
+        const anim = goingRight ? 'fishHorizontal' : 'fishHorizontalReverse';
+        fish.style.animation =
+            anim + ' ' + ascendTime + 's ease-in-out, ' +
+            'fishVertical ' + (Math.random() * 1 + 1.5) + 's ease-in-out infinite alternate';
+
+        const cleanup = function () {
+            if (fish.parentElement) {
+                fish.remove();
+                active -= 1;
+            }
+        };
+
+        active += 1;
+        container.appendChild(fish);
+        setTimeout(cleanup, ascendTime * 1000);
     }
-    runFunc();
-    return function() {
-        clearTimeout(timeout);
-    }
-}
 
-// using the above functions
-var stopFish = RandomInterval(GenerateRandomFish, 5000, 10000);
+    function randomInterval(func, minDelay, maxDelay) {
+        let timeout;
+        const run = function () {
+            timeout = setTimeout(run, Math.random() * (maxDelay - minDelay) + minDelay);
+            func();
+        };
+        run();
+        return function () { clearTimeout(timeout); };
+    }
+
+    window.stopFish = randomInterval(generateFish, SPAWN_MIN_MS, SPAWN_MAX_MS);
+})();

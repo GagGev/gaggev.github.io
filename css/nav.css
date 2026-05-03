@@ -1,0 +1,268 @@
+/* =========================================================
+   Sticky top navigation with backdrop blur.
+   Collapses to a hamburger menu below 700px.
+   ========================================================= */
+
+.site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    background: rgba(247, 251, 255, 0.72);
+    -webkit-backdrop-filter: saturate(160%) blur(14px);
+    backdrop-filter: saturate(160%) blur(14px);
+    border-bottom: 1px solid var(--border-soft);
+    transition: background var(--dur) var(--ease),
+                border-color var(--dur) var(--ease);
+}
+
+/* When the viewport has scrolled past the hero the nav adopts a
+   subtly darker tint so it reads against the underwater sections. */
+.site-nav.is-scrolled {
+    background: rgba(1, 26, 51, 0.78);
+    border-bottom-color: rgba(234, 243, 255, 0.08);
+    color: var(--on-dark);
+}
+
+.site-nav.is-scrolled .nav-link {
+    color: var(--on-dark-muted);
+}
+
+.site-nav.is-scrolled .nav-link:hover,
+.site-nav.is-scrolled .nav-link:focus-visible,
+.site-nav.is-scrolled .nav-link.is-active {
+    color: var(--accent);
+}
+
+.site-nav.is-scrolled .brand-text {
+    color: var(--on-dark);
+}
+
+.site-nav.is-scrolled .brand-mark {
+    color: var(--accent);
+}
+
+.nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    max-width: var(--content-max);
+    margin-inline: auto;
+    padding: 0.85rem var(--gutter);
+}
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+}
+
+.brand-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    color: var(--wave);
+}
+
+.brand-mark svg {
+    width: 100%;
+    height: 100%;
+}
+
+.brand-text {
+    color: var(--ink);
+    transition: color var(--dur) var(--ease);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-link {
+    position: relative;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    transition: color var(--dur) var(--ease);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 100%;
+    bottom: -6px;
+    height: 2px;
+    background: currentColor;
+    transition: right var(--dur) var(--ease);
+}
+
+.nav-link:hover,
+.nav-link:focus-visible,
+.nav-link.is-active {
+    color: var(--wave-darker);
+}
+
+.nav-link:hover::after,
+.nav-link:focus-visible::after,
+.nav-link.is-active::after {
+    right: 0;
+}
+
+.nav-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.55rem 1rem;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--sky);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: transform var(--dur) var(--ease),
+                background var(--dur) var(--ease);
+}
+
+.nav-cta:hover,
+.nav-cta:focus-visible {
+    background: var(--wave-darker);
+    transform: translateY(-1px);
+}
+
+.site-nav.is-scrolled .nav-cta {
+    background: var(--accent);
+    color: var(--abyss);
+}
+
+.site-nav.is-scrolled .nav-cta:hover,
+.site-nav.is-scrolled .nav-cta:focus-visible {
+    background: var(--on-dark);
+}
+
+/* Hamburger toggle (hidden on desktop) */
+.nav-toggle {
+    display: none;
+    background: transparent;
+    border: 0;
+    padding: 0.5rem;
+    cursor: pointer;
+    color: inherit;
+}
+
+.nav-toggle-icon,
+.nav-toggle-icon::before,
+.nav-toggle-icon::after {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: currentColor;
+    border-radius: 2px;
+    transition: transform var(--dur) var(--ease),
+                opacity var(--dur) var(--ease);
+}
+
+.nav-toggle-icon {
+    position: relative;
+}
+
+.nav-toggle-icon::before,
+.nav-toggle-icon::after {
+    content: '';
+    position: absolute;
+    left: 0;
+}
+
+.nav-toggle-icon::before { top: -7px; }
+.nav-toggle-icon::after  { top:  7px; }
+
+.nav-toggle[aria-expanded='true'] .nav-toggle-icon {
+    background: transparent;
+}
+
+.nav-toggle[aria-expanded='true'] .nav-toggle-icon::before {
+    top: 0;
+    transform: rotate(45deg);
+}
+
+.nav-toggle[aria-expanded='true'] .nav-toggle-icon::after {
+    top: 0;
+    transform: rotate(-45deg);
+}
+
+@media (max-width: 780px) {
+    .nav-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .nav-cta {
+        display: none;
+    }
+
+    .nav-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        display: grid;
+        gap: 0;
+        background: rgba(1, 26, 51, 0.95);
+        -webkit-backdrop-filter: blur(14px);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(234, 243, 255, 0.08);
+        padding: 0.5rem 0;
+        transform-origin: top;
+        transform: scaleY(0);
+        opacity: 0;
+        pointer-events: none;
+        transition: transform var(--dur) var(--ease),
+                    opacity var(--dur) var(--ease);
+    }
+
+    .nav-menu.is-open {
+        transform: scaleY(1);
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+    }
+
+    .nav-link {
+        padding: 0.9rem var(--gutter);
+        color: var(--on-dark-muted);
+    }
+
+    .nav-link::after {
+        display: none;
+    }
+
+    .nav-link:hover,
+    .nav-link:focus-visible,
+    .nav-link.is-active {
+        background: rgba(127, 211, 255, 0.08);
+        color: var(--accent);
+    }
+}

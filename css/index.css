@@ -1,156 +1,27 @@
-:root {
-    --footer-height: 250px;
-}
+/* =========================================================
+   Page-level composition.
+   Most styling now lives in tokens.css, nav.css, and
+   sections.css. This file only handles the overall page
+   skeleton and a few legacy utility classes used by the
+   bubble / fish / wave background layers.
+   ========================================================= */
 
-@font-face {
-    font-family: 'RobotoMono';
-    src: url('/fonts/RobotoMono-Regular.ttf') format('truetype');
-    font-weight: 400;
-    font-style: normal;
-}
-
-.container {
+.page {
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    min-height: 100vh;
+    overflow-x: hidden;
 }
 
-.heading {
-    position: relative;
-    padding: 100px 100px 30px;
-}
-
-.heading-text {
-    font-family: 'RobotoMono';
-    font-size: 3rem;
-    font-weight: 700;
-    color: #000;
-}
-
-.info {
-    position: relative;
-    padding: 50px 100px 0;
-    background-color: var(--wave-color);
-}
-
-.info-text {
-    font-size: 1.5rem;
-    font-weight: 400;
-    color: #fff;
-}
-
-.gradient-to-darker {
-    background: linear-gradient(var(--wave-color), var(--wave-color-darker));
-    height: 40vh;
-    text-align: center;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    font-size: 3rem;
-    font-weight: 700;
-}
-
-.subheading-text {
-    font-family: 'Poppins', sans-serif;
-    font-size: 2rem;
-    font-weight: 700;
-    color: #fff;
-    text-align: center;
-    margin-top: 100px;
-}
-
-.content {
-    position: relative;
-    padding: 50px 20px var(--footer-height);
-    /* webkit for chrome */
-    background: -webkit-linear-gradient(var(--wave-color), var(--wave-color-darker) 30%, var(--wave-color-darkest));
-    background: linear-gradient(var(--wave-color), var(--wave-color-darker) 30%, var(--wave-color-darkest));
-}
-
-.content-text {
-    font-size: 1.5rem;
-    font-weight: 400;
-    color: #fff;
-}
-
+/* Keep text content above the animated bubble/fish layer. */
 .over-bubbles {
     position: relative;
-    z-index: 602;
+    z-index: 5;
 }
 
-.footer {
-    position: absolute;
-    z-index: 601;
-    bottom: 0;
-    width: 100%;
-    height: var(--footer-height);
-    background-image: url("../images/bottom_of_sea_2.png");
-    /* set the background to cover all of the div  by strethcing across it */
-    background-size: cover;
-    /* set the background to not repeat */
-    background-repeat: no-repeat;
-    display: flex;
-    align-items: left;
-    justify-content: end;
-    flex-direction: column;
-    padding: 15px;
-    padding-left: 50px;
-}
-
-.footer p {
-    padding-bottom: 5px;
-}
-
-.footer .copyright {
-    font-size: 1rem;
-    font-weight: 400;
-    color: #fff;
-}
-
-.footer .disclaimer {
-    font-size: 1rem;
-    font-weight: 400;
-    color: rgb(255, 75, 75);
-}
-
-@media (max-width: 700px) {
-    .heading {
-        padding: 50px 50px 15px;
-    }
-
-    .heading-text {
-        font-size: 2rem;
-    }
-
-    .info {
-        padding: 25px 50px 50px;
-    }
-
-    .info-text {
-        font-size: 1.25rem;
-    }
-
-    .gradient-to-darker {
-        height: 30vh;
-        font-size: 2rem;
-        padding: 0 0 25px;
-    }
-
-    .content {
-        padding: 25px 10px var(--footer-height);
-    }
-
-    .content-text {
-        font-size: 1rem;
-    }
-
-    .footer {
-        align-items: center;
-    }
-
-    .footer .disclaimer {
-        display: none;
-    }
+/* The hero's heading cursor feedback (name-scramble effect). */
+.hero-title:hover,
+.hero-title:focus-visible {
+    cursor: pointer;
 }

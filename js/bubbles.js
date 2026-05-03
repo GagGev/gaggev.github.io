@@ -1,37 +1,60 @@
-function GenerateRandomBubble() {
-    const bubbleContainer = document.getElementById("bubbleContainer");
-    var bubble = document.createElement("div");
-    bubble.className = "bubble";
-    bubble.style.left = Math.random() * 100 + "%";
-    bubble.style.top = "0";
-    bubble.style.transform = "scale(" + Math.random() / 1.5 + ")";
-    const ascendTime = (Math.random() * 5 + 5) * 1.5;
-    bubble.style.animation = "bubbleVertical " + ascendTime + "s linear , bubbleHorizontal " + (Math.random() * 1 + 1) + "s ease-in-out infinite alternate";
-    // adding the onclick event
-    bubble.onclick = function() {
-        bubble.remove();
-    }
-    // but we also want to remove the bubble after it's done ascending
-    setTimeout(function() {
-        bubble.remove();
-    }
-    , ascendTime * 1000);
-    // finally, add the bubble to the container
-    bubbleContainer.appendChild(bubble);
-}
+// Rising bubbles in the underwater layer.
+// Capped at MAX_BUBBLES concurrent, slower than before,
+// and completely disabled for prefers-reduced-motion users.
 
-// setInterval, but with a random delay
-function RandomInterval(func, minDelay, maxDelay) {
-    var timeout;
-    var runFunc = function() {
-        timeout = setTimeout(runFunc, Math.random() * (maxDelay - minDelay) + minDelay);
-        func();
+(function () {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) {
+        return;
     }
-    runFunc();
-    return function() {
-        clearTimeout(timeout);
-    }
-}
 
-// using the above functions
-var stopBubbles = RandomInterval(GenerateRandomBubble, 2000, 4000);
+    const container = document.getElementById('bubbleContainer');
+    if (!container) {
+        return;
+    }
+
+    const MAX_BUBBLES = 20;
+    const SPAWN_MIN_MS = 1000;
+    const SPAWN_MAX_MS = 2200;
+    let active = 0;
+
+    function generateBubble() {
+        if (active >= MAX_BUBBLES) {
+            return;
+        }
+
+        const bubble = document.createElement('div');
+        bubble.className = 'bubble';
+        bubble.style.left = Math.random() * 100 + '%';
+        bubble.style.transform = 'scale(' + (Math.random() * 0.45 + 0.25) + ')';
+
+        const ascendTime = (Math.random() * 6 + 9);
+        bubble.style.animation =
+            'bubbleVertical ' + ascendTime + 's linear, ' +
+            'bubbleHorizontal ' + (Math.random() * 1 + 1.5) + 's ease-in-out infinite alternate';
+
+        const cleanup = function () {
+            if (bubble.parentElement) {
+                bubble.remove();
+                active -= 1;
+            }
+        };
+        bubble.addEventListener('click', cleanup);
+
+        active += 1;
+        container.appendChild(bubble);
+        setTimeout(cleanup, ascendTime * 1000);
+    }
+
+    function randomInterval(func, minDelay, maxDelay) {
+        let timeout;
+        const run = function () {
+            timeout = setTimeout(run, Math.random() * (maxDelay - minDelay) + minDelay);
+            func();
+        };
+        run();
+        return function () { clearTimeout(timeout); };
+    }
+
+    window.stopBubbles = randomInterval(generateBubble, SPAWN_MIN_MS, SPAWN_MAX_MS);
+})();

@@ -1,0 +1,240 @@
+/* =========================================================
+   Design tokens — single source of truth for the site.
+   Extends the existing wave palette upward into "sky" and
+   downward into "abyss". Every other stylesheet references
+   these variables.
+   ========================================================= */
+
+@font-face {
+    font-family: 'RobotoMono';
+    src: url('../fonts/RobotoMono-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'RobotoMono';
+    src: url('../fonts/RobotoMono-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'RobotoMono';
+    src: url('../fonts/RobotoMono-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root {
+    /* ---- Sea palette (surface -> seabed) ------------------ */
+    --sky:            #f7fbff;
+    --foam:           #e6f2ff;
+    --wave:           #0099ff;
+    --wave-darker:    #0066cc;
+    --wave-darkest:   #003366;
+    --abyss:          #011a33;
+
+    /* ---- Ink, accents, medals ----------------------------- */
+    --ink:            #0a1929;
+    --ink-muted:      #4a5a6e;
+    --on-dark:        #eaf3ff;
+    --on-dark-muted:  #9ab4cc;
+    --border-soft:    rgba(10, 25, 41, 0.08);
+    --border-on-dark: rgba(234, 243, 255, 0.14);
+
+    --accent:         #7fd3ff;   /* bioluminescent cyan */
+    --accent-strong:  #00c2ff;
+
+    --gold:           #d4a84b;
+    --silver:         #c0c7cf;
+    --bronze:         #b87333;
+
+    /* ---- Typography --------------------------------------- */
+    --font-mono:      'RobotoMono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --font-sans:      'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+    --fs-hero:        clamp(2.5rem, 7vw, 5rem);
+    --fs-h2:          clamp(1.75rem, 3.2vw, 2.5rem);
+    --fs-h3:          1.25rem;
+    --fs-body:        1.0625rem;
+    --fs-small:       0.9rem;
+    --fs-mono:        0.85rem;
+
+    /* ---- Layout ------------------------------------------- */
+    --content-max:    1100px;
+    --gutter:         clamp(1.25rem, 4vw, 3rem);
+    --section-pad-y:  clamp(4rem, 9vw, 7rem);
+    --radius-sm:      6px;
+    --radius-md:      12px;
+    --radius-lg:      20px;
+
+    /* ---- Motion ------------------------------------------- */
+    --ease:           cubic-bezier(0.22, 1, 0.36, 1);
+    --dur:            240ms;
+
+    /* ---- Elevation ---------------------------------------- */
+    --shadow-sm:      0 2px 6px rgba(0, 30, 60, 0.08);
+    --shadow-md:      0 10px 30px rgba(0, 30, 60, 0.12);
+    --shadow-on-dark: 0 20px 45px rgba(0, 0, 0, 0.35);
+}
+
+/* =========================================================
+   Base reset + global defaults
+   ========================================================= */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-sans);
+    font-size: var(--fs-body);
+    line-height: 1.6;
+    color: var(--ink);
+    background: var(--sky);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+img,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--dur) var(--ease);
+}
+
+:focus-visible {
+    outline: 2px solid var(--accent-strong);
+    outline-offset: 3px;
+    border-radius: 3px;
+}
+
+/* Users with reduced motion preference get a calmer experience. */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+    }
+}
+
+/* =========================================================
+   Generic layout utilities used across sections
+   ========================================================= */
+
+.container {
+    width: 100%;
+    max-width: var(--content-max);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-mono);
+    font-size: var(--fs-mono);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 1rem;
+}
+
+.eyebrow .eyebrow-num {
+    color: currentColor;
+    opacity: 0.7;
+}
+
+.section {
+    position: relative;
+    padding-block: var(--section-pad-y);
+}
+
+.section-heading {
+    font-family: var(--font-sans);
+    font-size: var(--fs-h2);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin: 0 0 2.5rem;
+    color: inherit;
+}
+
+.section-lead {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    max-width: 60ch;
+    margin: 0 0 2.5rem;
+    color: inherit;
+    opacity: 0.85;
+}
+
+/* Surfaces for layering in the depth metaphor */
+.surface-sky    { background: var(--sky);         color: var(--ink); }
+.surface-foam   { background: var(--foam);        color: var(--ink); }
+.surface-wave   { background: var(--wave);        color: var(--on-dark); }
+.surface-darker { background: var(--wave-darker); color: var(--on-dark); }
+.surface-deep   { background: var(--wave-darkest);color: var(--on-dark); }
+.surface-abyss  { background: var(--abyss);       color: var(--on-dark); }
+
+/* Screen-reader-only helper */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Skip-to-content link reveals itself on keyboard focus. */
+.visually-hidden:focus,
+.visually-hidden:focus-visible {
+    position: fixed;
+    top: 0.75rem;
+    left: 0.75rem;
+    width: auto;
+    height: auto;
+    padding: 0.6rem 1rem;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+    background: var(--ink);
+    color: var(--sky);
+    border-radius: var(--radius-sm);
+    z-index: 2000;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+}

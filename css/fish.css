@@ -1,21 +1,46 @@
+/* =========================================================
+   Fish swim slowly through the underwater layer, behind content.
+   Dimmed so they read as atmospheric, not distracting.
+
+   The .fish-layer spans the full height of the .underwater wrapper
+   (not just the viewport), so `top: X%` on a fish distributes it
+   across the entire underwater section. That way fish appear at
+   every depth as you scroll, rather than clustering in the top
+   100vh.
+   ========================================================= */
+
+.fish-layer {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
 .fish {
     position: absolute;
+    opacity: 0.55;
+    filter: saturate(0.85);
+    will-change: transform, left, margin-top;
+    pointer-events: none;
 }
 
 @keyframes fishHorizontal {
-    0% {
-        left: -500px;
-    }
-    100% {
-        left: calc(100% + 500px);
-    }
+    0%   { left: -500px; }
+    100% { left: calc(100% + 500px); }
+}
+
+@keyframes fishHorizontalReverse {
+    0%   { left: calc(100% + 500px); }
+    100% { left: -500px; }
 }
 
 @keyframes fishVertical {
-    0% { 
-        margin-top:0px;
-    }
-    100% { 
-        margin-top:50px;
+    0%   { margin-top: 0; }
+    100% { margin-top: 50px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fish {
+        display: none;
     }
 }

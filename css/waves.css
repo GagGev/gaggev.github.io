@@ -1,22 +1,19 @@
-/* the color used: #0099ff */
+/* =========================================================
+   Layered SVG wave transition between hero and underwater.
+   Colors are driven by currentColor + var(--wave) so the
+   palette stays centralized in tokens.css.
+   ========================================================= */
 
 :root {
-    --wave-color: #0099ff;
-    --wave-color-darker: #0066cc;
-    --wave-color-darkest: #003366;
     --wave-total-length: 10000px;
-}
-
-* {
-    margin: 0;
-    padding: 0;
 }
 
 .wave-container {
     position: relative;
-    height: 200px;
+    height: 180px;
     width: 100%;
-    background: #fff;
+    background: var(--sky);
+    color: var(--wave);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -27,52 +24,59 @@
     position: absolute;
     bottom: 0;
     width: var(--wave-total-length);
+    /* tokens.css sets a global svg { max-width: 100% } for images;
+       we must opt out here or the wave gets clamped to the container width
+       and slides in/out instead of covering it. */
+    max-width: none;
+    color: currentColor;
+    fill: currentColor;
 }
 
 .wave1 {
     animation: wave-left-right 40s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
-    z-index: 504;
+    z-index: 4;
     height: 85%;
+    opacity: 1;
 }
 
 .wave2 {
     animation: wave-right-left 35s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
-    z-index: 503;
+    z-index: 3;
     height: 90%;
+    opacity: 0.7;
 }
 
 .wave3 {
     animation: wave-left-right 30s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
-    z-index: 502;
+    z-index: 2;
     height: 95%;
+    opacity: 0.4;
 }
 
 .wave4 {
     animation: wave-right-left 20s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
-    z-index: 501;
+    z-index: 1;
     height: 100%;
+    opacity: 0.22;
 }
 
 @keyframes wave-left-right {
-    0% {
-        left: 0;
-    }
-    50% {
-        left: calc(100% - var(--wave-total-length));
-    }
-    100% {
-        left: 0;
-    }
+    0%   { left: 0; }
+    50%  { left: calc(100% - var(--wave-total-length)); }
+    100% { left: 0; }
 }
 
 @keyframes wave-right-left {
-    0% {
-        left: calc(100% - var(--wave-total-length));
-    }
-    50% {
-        left: 0;
-    }
-    100% {
-        left: calc(100% - var(--wave-total-length));
+    0%   { left: calc(100% - var(--wave-total-length)); }
+    50%  { left: 0; }
+    100% { left: calc(100% - var(--wave-total-length)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .wave1,
+    .wave2,
+    .wave3,
+    .wave4 {
+        animation: none;
     }
 }
